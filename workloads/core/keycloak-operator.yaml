@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak-operator
+  namespace: keycloak
+  labels:
+    app.kubernetes.io/name: keycloak-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: keycloak-operator
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: keycloak-operator
+    spec:
+      serviceAccountName: keycloak-operator
+      containers:
+      - name: keycloak-operator
+        image: quay.io/keycloak/keycloak-operator:26.0.0
+        args: ["operator"]
+        env:
+        - name: WATCH_NAMESPACE
+          value: "keycloak"
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: keycloak-operator
+  namespace: keycloak
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: keycloak-operator-cluster-role
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: keycloak-operator-cluster-role-binding
+subjects:
+- kind: ServiceAccount
+  name: keycloak-operator
+  namespace: keycloak
+roleRef:
+  kind: ClusterRole
+  name: keycloak-operator-cluster-role
+  apiGroup: rbac.authorization.k8s.io
