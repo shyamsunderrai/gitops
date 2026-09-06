@@ -4,10 +4,12 @@ metadata:
   name: keycloak-route
   namespace: keycloak
 spec:
+  host: keycloak-route-keycloak.apps-crc.testing
   to:
     kind: Service
     name: keycloak-service
   port:
-    targetPort: https
+    targetPort: http
   tls:
-    termination: passthrough
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
