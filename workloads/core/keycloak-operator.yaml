@@ -27,6 +27,8 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
+        - name: JDK_JAVA_OPTIONS
+          value: "-XX:UseSVE=0"
         resources:
           limits:
             cpu: 500m
