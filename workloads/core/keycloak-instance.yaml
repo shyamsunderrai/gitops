@@ -17,7 +17,13 @@ spec:
       name: keycloak-db-secret
       key: password
   http:
-    tlsSecret: "" # Let OpenShift handle TLS termination via the Route
+    httpEnabled: true
+    hostname:
+      hostname: https://keycloak-route-keycloak.apps-crc.testing
+    proxy:
+      headers: xforwarded 
+
+    #tlsSecret: "" # Let OpenShift handle TLS termination via the Route
   unsupported:
     podTemplate:
       spec:

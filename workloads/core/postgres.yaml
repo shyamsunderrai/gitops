@@ -6,6 +6,13 @@ metadata:
   annotations: 
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
+  http:
+    httpEnabled: true
+  hostname: 
+    hostname: https://keycloak-route-keycloak.apps-crc.testing
+  proxy:
+    headers: xforwarded
+  
   instances: 1
   db:
     vendor: postgres
