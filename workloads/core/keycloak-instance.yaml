@@ -6,6 +6,8 @@ metadata:
   annotations: 
     rgocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
+  ingress:
+    enabled: false
   instances: 1
   db:
     vendor: postgres
