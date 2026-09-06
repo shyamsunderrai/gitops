@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: '<YOUR_GIT_REPOSITORY_URL>'
+    repoURL: 'https://github.com/shyamsunderrai/gitops.git'
     targetRevision: master
     path: workloads/core
   destination:
